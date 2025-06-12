@@ -14,14 +14,14 @@ const (
 	headerRateLimitLimitMinute     = "x-ratelimit-limit-minute"
 	headerRateLimitRemainingMinute = "x-ratelimit-remaining-minute"
 
-	listTrendingReposEndpoint = "/v1/trends/repos/"
+	listTrendingReposEndpoint = "/trends/repos/"
 )
 
 // ListTrendReposPeriod 趋势仓库周期
 //
 //	@author centonhuang
 //	@update 2025-06-09 20:39:20
-type ListTrendReposPeriod string
+type ListTrendReposPeriod = string
 
 const (
 	// ListTrendReposPeriodPast24Hours ListTrendReposPeriod 最近24小时
@@ -51,7 +51,7 @@ const (
 //
 //	@author centonhuang
 //	@update 2025-01-15 00:00:00
-type ListTrendReposLanguage string
+type ListTrendReposLanguage = string
 
 const (
 	// LanguageAll Language 所有语言 (默认值)

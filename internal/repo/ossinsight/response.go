@@ -148,17 +148,17 @@ type TrendingReposData struct {
 //	@author centonhuang
 //	@update 2025-06-09 20:24:00
 type TrendingRepoRow struct {
-	RepoID            int64   `json:"repo_id"`
-	RepoName          string  `json:"repo_name"`
-	PrimaryLanguage   string  `json:"primary_language"`
-	Description       string  `json:"description"`
-	Stars             int64   `json:"stars"`
-	Forks             int64   `json:"forks"`
-	PullRequests      int64   `json:"pull_requests"`
-	Pushes            int64   `json:"pushes"`
-	TotalScore        float64 `json:"total_score"`
-	ContributorLogins string  `json:"contributor_logins"`
-	CollectionNames   string  `json:"collection_names"`
+	RepoID            string `json:"repo_id"`
+	RepoName          string `json:"repo_name"`
+	PrimaryLanguage   string `json:"primary_language"`
+	Description       string `json:"description"`
+	Stars             string `json:"stars"`
+	Forks             string `json:"forks"`
+	PullRequests      string `json:"pull_requests"`
+	Pushes            string `json:"pushes"`
+	TotalScore        string `json:"total_score"`
+	ContributorLogins string `json:"contributor_logins"`
+	CollectionNames   string `json:"collection_names"`
 }
 
 // // CollectionRow 收藏夹数据
@@ -178,7 +178,7 @@ type TrendingRepoRow struct {
 // 	ID                    int64  `json:"id"`
 // 	Name                  string `json:"name"`
 // 	Repos                 int64  `json:"repos"`
-// 	RepoID                int64  `json:"repo_id"`
+// 	RepoID                string `json:"repo_id"`
 // 	RepoName              string `json:"repo_name"`
 // 	RepoCurrentPeriodRank *int   `json:"repo_current_period_rank"`
 // 	RepoPastPeriodRank    *int   `json:"repo_past_period_rank"`
@@ -190,7 +190,7 @@ type TrendingRepoRow struct {
 // //	@author centonhuang
 // //	@update 2025-06-09 20:24:11
 // type CollectionRepoRow struct {
-// 	RepoID   int64  `json:"repo_id"`
+// 	RepoID   string `json:"repo_id"`
 // 	RepoName string `json:"repo_name"`
 // }
 
@@ -199,7 +199,7 @@ type TrendingRepoRow struct {
 // //	@author centonhuang
 // //	@update 2025-06-09 20:24:13
 // type RepoRankingRow struct {
-// 	RepoID              int64   `json:"repo_id"`
+// 	RepoID              string  `json:"repo_id"`
 // 	RepoName            string  `json:"repo_name"`
 // 	CurrentPeriodGrowth int64   `json:"current_period_growth"`
 // 	CurrentPeriodRank   int64   `json:"current_period_rank"`

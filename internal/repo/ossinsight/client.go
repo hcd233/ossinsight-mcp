@@ -1,6 +1,7 @@
 package ossinsight
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -59,7 +60,7 @@ func NewClient(options ...ClientOption) *Client {
 }
 
 // makeRequest makes an HTTP request to the OSSInsight API
-func (c *Client) makeRequest(endpoint string, query url.Values) ([]byte, *RateLimitInfo, error) {
+func (c *Client) makeRequest(ctx context.Context, endpoint string, query url.Values) ([]byte, *RateLimitInfo, error) {
 	u, err := url.JoinPath(c.baseURL, endpoint)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to join path: %w", err)
@@ -76,6 +77,8 @@ func (c *Client) makeRequest(endpoint string, query url.Values) ([]byte, *RateLi
 	}
 
 	req.Header.Set("User-Agent", c.userAgent)
+
+	req = req.WithContext(ctx)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -128,8 +131,8 @@ func (c *Client) makeRequest(endpoint string, query url.Values) ([]byte, *RateLi
 //	@return error
 //	@author centonhuang
 //	@update 2025-06-09 20:34:05
-func (c *Client) ListTrendingRepos(query *ListTrendingReposQuery) (*ListTrendingReposResponse, *RateLimitInfo, error) {
-	bts, rateLimitInfo, err := c.makeRequest(listTrendingReposEndpoint, toQuery(query))
+func (c *Client) ListTrendingRepos(ctx context.Context, query *ListTrendingReposQuery) (*ListTrendingReposResponse, *RateLimitInfo, error) {
+	bts, rateLimitInfo, err := c.makeRequest(ctx, listTrendingReposEndpoint, toQuery(query))
 	if err != nil {
 		return nil, rateLimitInfo, err
 	}

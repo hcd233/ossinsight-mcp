@@ -7,6 +7,9 @@ import (
 	"os"
 
 	"github.com/hcd233/ossinsight-mcp/internal/logger"
+	"github.com/hcd233/ossinsight-mcp/internal/service"
+	"github.com/hcd233/ossinsight-mcp/internal/util"
+	"github.com/mark3labs/mcp-go/server"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -23,7 +26,22 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(_ *cobra.Command, _ []string) {
+		s := server.NewMCPServer(
+			"Demo Server",
+			"1.0.0",
+			server.WithToolCapabilities(true),
+			// server.WithResourceCapabilities(false, true),
+			// server.WithPromptCapabilities(true),
+		)
+
+		service.RegisterTools(s)
+
+		logger.Logger().Info("[Root CMD] start ossinsight-mcp server")
+		if err := server.NewStreamableHTTPServer(s, server.WithHTTPContextFunc(util.WithTraceID)).Start(":8080"); err != nil {
+			logger.Logger().Error("[Root CMD] serve stdio failed", zap.Error(err))
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -34,7 +52,4 @@ func Execute() {
 		logger.Logger().Error("[Root CMD] execute failed", zap.Error(err))
 		os.Exit(1)
 	}
-}
-
-func init() {
 }
