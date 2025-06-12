@@ -38,7 +38,7 @@ to quickly create a Cobra application.`,
 		service.RegisterTools(s)
 
 		logger.Logger().Info("[Root CMD] start ossinsight-mcp server")
-		if err := server.NewStreamableHTTPServer(s, server.WithHTTPContextFunc(util.WithTraceID)).Start(":8080"); err != nil {
+		if err := server.NewStreamableHTTPServer(s, server.WithHTTPContextFunc(util.WithTraceID)).Start("0.0.0.0:8080"); err != nil {
 			logger.Logger().Error("[Root CMD] serve stdio failed", zap.Error(err))
 		}
 	},
