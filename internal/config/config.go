@@ -15,6 +15,10 @@ var (
 	// LogLevel string 日志级别
 	//	@update 2025-06-09 19:24:02
 	LogLevel string
+
+	// APIKey string 认证key
+	//	@update 2025-06-13 16:47:01
+	APIKey string
 )
 
 func init() {
@@ -32,4 +36,6 @@ func initEnvironment() {
 
 	LogDirPath = config.GetString("log.dir.path")
 	LogLevel = config.GetString("log.level")
+
+	APIKey = config.GetString("mcp.api.key")
 }

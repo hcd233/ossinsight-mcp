@@ -1,6 +1,7 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
+// Package cmd 命令行
+//
+//	@author centonhuang
+//	@update 2025-06-13 16:26:27
 package cmd
 
 import (

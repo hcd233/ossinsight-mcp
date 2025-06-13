@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/hcd233/ossinsight-mcp/internal/config"
 	"github.com/hcd233/ossinsight-mcp/internal/logger"
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/client/transport"
@@ -21,7 +23,8 @@ var clientCmd = &cobra.Command{
 		endpoint := lo.Must1(cmd.Flags().GetString("endpoint"))
 
 		cli, err := client.NewStreamableHttpClient(endpoint, transport.WithHTTPHeaders(map[string]string{
-			"X-Trace-Id": uuid.NewString(),
+			"X-Trace-Id":    uuid.NewString(),
+			"Authorization": fmt.Sprintf("Bearer %s", config.APIKey),
 		}))
 		if err != nil {
 			logger.Logger().Error("[Client CMD] create client failed", zap.Error(err))

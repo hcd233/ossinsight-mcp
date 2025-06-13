@@ -3,15 +3,15 @@ module github.com/hcd233/ossinsight-mcp
 go 1.23.4
 
 require (
+	github.com/google/uuid v1.6.0
+	github.com/samber/lo v1.51.0
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 )
 
 require (
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
-	github.com/samber/lo v1.51.0 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 )
 

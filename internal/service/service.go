@@ -1,3 +1,7 @@
+// package service 服务
+//
+//	@author centonhuang
+//	@update 2025-06-13 16:50:01
 package service
 
 import (
@@ -15,8 +19,10 @@ import (
 //	@update 2025-06-12 21:06:34
 func RegisterTools(s *server.MCPServer) {
 	handler := mcp.NewOssinsightMCPHandler(ossinsight.NewClient())
-	s.AddTool(mcp.ListTrendingReposSchema, handler.ListTrendingRepos)
-	logger.Logger().Info("[Server] register tool", zap.String("tool", mcp.ListTrendingReposSchema.Name), zap.String("description", mcp.ListTrendingReposSchema.Description))
+
+	schema := mcp.ListTrendingReposSchema()
+	s.AddTool(schema, handler.ListTrendingRepos)
+	logger.Logger().Info("[Server] register tool", zap.String("tool", schema.Name), zap.String("description", schema.Description))
 
 	logger.Logger().Info("[Server] register tool success")
 }
