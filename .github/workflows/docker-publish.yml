@@ -92,6 +92,9 @@ jobs:
 
   merge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs:
       - build
     if: github.event_name != 'pull_request'
