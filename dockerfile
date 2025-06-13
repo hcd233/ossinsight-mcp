@@ -26,4 +26,4 @@ EXPOSE 8080
 # CMD ["/app/ossinsight-mcp", "client", "--endpoint", "http://localhost:8080/mcp"]
 
 # docker buildx build --platform linux/amd64 -t ossinsight-mcp:latest .
-# docker run -d -p 8080:8080 --env-file .env --name ossinsight-mcp -t ossinsight-mcp:latest /app/ossinsight-mcp server start --host 0.0.0.0 --port 8080
+# docker run -d -p 8080:8080 --env-file .env --name ossinsight-mcp -t ossinsight-mcp:latest /app/ossinsight-mcp server --host 0.0.0.0 --port 8080
