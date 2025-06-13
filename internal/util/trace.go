@@ -17,7 +17,7 @@ import (
 func WithTraceID(ctx context.Context, r *http.Request) context.Context {
 	traceID := r.Header.Get("X-Trace-ID")
 	if traceID == "" {
-		traceID = uuid.New().String()
+		traceID = uuid.NewString()
 	}
 	return context.WithValue(ctx, constant.CtxKeyTraceID, traceID)
 }

@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 
 	"github.com/hcd233/ossinsight-mcp/internal/constant"
+	"github.com/hcd233/ossinsight-mcp/internal/logger"
 	"github.com/hcd233/ossinsight-mcp/internal/repo/ossinsight"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/samber/lo"
+	"go.uber.org/zap"
 )
 
 // OssinsightMCPHandler Ossinsight MCP 处理器
@@ -38,6 +40,9 @@ func NewOssinsightMCPHandler(ossinsightClient *ossinsight.Client) *OssinsightMCP
 //	@author centonhuang
 //	@update 2025-06-12 20:57:36
 func (h *OssinsightMCPHandler) ListTrendingRepos(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	logger := logger.ContextLogger(ctx)
+
+	logger.Info("[ListTrendingRepos] receive request", zap.Any("params", request.Params))
 	response := &mcp.CallToolResult{Result: mcp.Result{
 		Meta: map[string]any{
 			constant.MetaKeyTraceID: ctx.Value(constant.MetaKeyTraceID),
@@ -45,12 +50,14 @@ func (h *OssinsightMCPHandler) ListTrendingRepos(ctx context.Context, request mc
 	}}
 	period, err := request.RequireString("period")
 	if err != nil {
+		logger.Error("[ListTrendingRepos] period is required", zap.Error(err))
 		response.IsError = true
 		return response, constant.ErrRequiredArgumentNotFound.Errorf("period")
 	}
 
 	language, err := request.RequireString("language")
 	if err != nil {
+		logger.Error("[ListTrendingRepos] language is required", zap.Error(err))
 		response.IsError = true
 		return response, constant.ErrRequiredArgumentNotFound.Errorf("language")
 	}
@@ -62,12 +69,14 @@ func (h *OssinsightMCPHandler) ListTrendingRepos(ctx context.Context, request mc
 
 	rsp, _, err := h.cli.ListTrendingRepos(ctx, req)
 	if err != nil {
+		logger.Error("[ListTrendingRepos] list trending repos failed", zap.Error(err))
 		response.IsError = true
 		return response, err
 	}
 
 	content := mcp.NewTextContent(string(lo.Must1(json.MarshalIndent(rsp.Data.Rows, "", "  "))))
 
+	logger.Info("[ListTrendingRepos] list trending repos success", zap.Any("content", content))
 	response.Content = []mcp.Content{content}
 	response.IsError = false
 	return response, nil
