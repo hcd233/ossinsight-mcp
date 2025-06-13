@@ -131,7 +131,7 @@ func (c *Client) makeRequest(ctx context.Context, endpoint string, query url.Val
 //	@return error
 //	@author centonhuang
 //	@update 2025-06-09 20:34:05
-func (c *Client) ListTrendingRepos(ctx context.Context, query *ListTrendingReposQuery) (*ListTrendingReposResponse, *RateLimitInfo, error) {
+func (c *Client) ListTrendingRepos(ctx context.Context, query *ListTrendingReposQuery, limit int) (*ListTrendingReposResponse, *RateLimitInfo, error) {
 	bts, rateLimitInfo, err := c.makeRequest(ctx, listTrendingReposEndpoint, toQuery(query))
 	if err != nil {
 		return nil, rateLimitInfo, err
@@ -140,6 +140,10 @@ func (c *Client) ListTrendingRepos(ctx context.Context, query *ListTrendingRepos
 	var response ListTrendingReposResponse
 	if err := json.Unmarshal(bts, &response); err != nil {
 		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 {
+		response.Data.Rows = response.Data.Rows[:limit]
 	}
 
 	return &response, rateLimitInfo, nil

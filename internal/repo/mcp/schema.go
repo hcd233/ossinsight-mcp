@@ -11,9 +11,9 @@ import (
 //	@update 2025-06-12 20:41:39
 var ListTrendingReposSchema = mcp.NewTool(
 	"ListTrendingRepos",
-	mcp.WithDescription(""),
+	mcp.WithDescription("Get trending GitHub repositories based on various time periods and programming languages. This tool helps discover popular and rapidly growing repositories in the GitHub ecosystem."),
 	mcp.WithString("period",
-		mcp.Description(""),
+		mcp.Description("Time period for fetching trending repositories. Choose from past 24 hours, past week, past month, or past 3 months to see repositories that gained popularity during that timeframe."),
 		mcp.Enum(
 			ossinsight.ListTrendReposPeriodPast24Hours,
 			ossinsight.ListTrendReposPeriodPastWeek,
@@ -22,7 +22,7 @@ var ListTrendingReposSchema = mcp.NewTool(
 		),
 	),
 	mcp.WithString("language",
-		mcp.Description(""),
+		mcp.Description("Programming language filter for trending repositories. Select a specific programming language to see trending repositories in that language, or choose 'All' to see repositories across all programming languages."),
 		mcp.Enum(
 			ossinsight.LanguageAll,
 			ossinsight.LanguageJavaScript,
@@ -66,5 +66,11 @@ var ListTrendingReposSchema = mcp.NewTool(
 			ossinsight.LanguagePerl,
 			ossinsight.LanguageFortran,
 		),
+	),
+	mcp.WithNumber("limit",
+		mcp.Description("Maximum number of repositories to return. Range from 1 to 100."),
+		mcp.DefaultNumber(10),
+		mcp.Min(1),
+		mcp.Max(100),
 	),
 )

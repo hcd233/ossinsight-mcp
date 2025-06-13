@@ -62,12 +62,19 @@ func (h *OssinsightMCPHandler) ListTrendingRepos(ctx context.Context, request mc
 		return response, constant.ErrRequiredArgumentNotFound.Errorf("language")
 	}
 
+	limit, err := request.RequireInt("limit")
+	if err != nil {
+		logger.Error("[ListTrendingRepos] limit is required", zap.Error(err))
+		response.IsError = true
+		return response, constant.ErrRequiredArgumentNotFound.Errorf("limit")
+	}
+
 	req := &ossinsight.ListTrendingReposQuery{
 		Period:   period,
 		Language: language,
 	}
 
-	rsp, _, err := h.cli.ListTrendingRepos(ctx, req)
+	rsp, _, err := h.cli.ListTrendingRepos(ctx, req, limit)
 	if err != nil {
 		logger.Error("[ListTrendingRepos] list trending repos failed", zap.Error(err))
 		response.IsError = true

@@ -48,6 +48,7 @@ var clientCmd = &cobra.Command{
 				Arguments: map[string]any{
 					"period":   "past_24_hours",
 					"language": "Go",
+					"limit":    10,
 				},
 			},
 		})
