@@ -15,6 +15,30 @@ const (
 	headerRateLimitRemainingMinute = "x-ratelimit-remaining-minute"
 
 	listTrendingReposEndpoint = "/trends/repos/"
+	
+	// 仓库相关端点
+	repoRankingEndpoint = "/rankings/repos/"
+	repoCollectionEndpoint = "/collections/repos/"
+	
+	// 开发者相关端点
+	developerRankingEndpoint = "/rankings/developers/"
+	developerCollectionEndpoint = "/collections/developers/"
+	
+	// 收藏夹相关端点
+	collectionsEndpoint = "/collections/"
+	hotCollectionsEndpoint = "/collections/hot/"
+	
+	// 仓库详情端点
+	repoDetailEndpoint = "/repos/"
+	
+	// 开发者详情端点
+	developerDetailEndpoint = "/developers/"
+	
+	// 语言统计端点
+	languageStatsEndpoint = "/stats/languages/"
+	
+	// 时间范围端点
+	timeRangeEndpoint = "/stats/time-ranges/"
 )
 
 // ListTrendReposPeriod 趋势仓库周期
@@ -296,7 +320,66 @@ const (
 
 	// LanguageFortran ListTrendReposLanguage Fortran
 	//
-	//	@author centonhuang
-	//	@update 2025-
+	//	@update 2025-06-09 20:43:33
 	LanguageFortran ListTrendReposLanguage = "Fortran"
+)
+
+// RankingType 排名类型
+type RankingType = string
+
+const (
+	// RankingTypeStars 按星标数排名
+	RankingTypeStars RankingType = "stars"
+	
+	// RankingTypeForks 按分支数排名
+	RankingTypeForks RankingType = "forks"
+	
+	// RankingTypeCommits 按提交数排名
+	RankingTypeCommits RankingType = "commits"
+	
+	// RankingTypeContributors 按贡献者数排名
+	RankingTypeContributors RankingType = "contributors"
+	
+	// RankingTypePullRequests 按拉取请求数排名
+	RankingTypePullRequests RankingType = "pull_requests"
+	
+	// RankingTypeIssues 按问题数排名
+	RankingTypeIssues RankingType = "issues"
+)
+
+// TimeRange 时间范围
+type TimeRange = string
+
+const (
+	// TimeRangePast24Hours 过去24小时
+	TimeRangePast24Hours TimeRange = "past_24_hours"
+	
+	// TimeRangePastWeek 过去一周
+	TimeRangePastWeek TimeRange = "past_week"
+	
+	// TimeRangePastMonth 过去一个月
+	TimeRangePastMonth TimeRange = "past_month"
+	
+	// TimeRangePast3Months 过去三个月
+	TimeRangePast3Months TimeRange = "past_3_months"
+	
+	// TimeRangePastYear 过去一年
+	TimeRangePastYear TimeRange = "past_year"
+	
+	// TimeRangeAllTime 所有时间
+	TimeRangeAllTime TimeRange = "all_time"
+)
+
+// CollectionType 收藏夹类型
+type CollectionType = string
+
+const (
+	// CollectionTypeAll 所有类型
+	CollectionTypeAll CollectionType = "all"
+	
+	// CollectionTypeHot 热门收藏夹
+	CollectionTypeHot CollectionType = "hot"
+	
+	// CollectionTypeUser 用户收藏夹
+	CollectionTypeUser CollectionType = "user"
 )

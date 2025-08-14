@@ -148,3 +148,152 @@ func (c *Client) ListTrendingRepos(ctx context.Context, query *ListTrendingRepos
 
 	return &response, rateLimitInfo, nil
 }
+
+// GetRepoRanking 获取仓库排名
+func (c *Client) GetRepoRanking(ctx context.Context, query *RepoRankingQuery, limit int) (*RepoRankingResponse, *RateLimitInfo, error) {
+	endpoint := fmt.Sprintf("%s%s", repoRankingEndpoint, query.RankingType)
+	bts, rateLimitInfo, err := c.makeRequest(ctx, endpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response RepoRankingResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetDeveloperRanking 获取开发者排名
+func (c *Client) GetDeveloperRanking(ctx context.Context, query *DeveloperRankingQuery, limit int) (*DeveloperRankingResponse, *RateLimitInfo, error) {
+	endpoint := fmt.Sprintf("%s%s", developerRankingEndpoint, query.RankingType)
+	bts, rateLimitInfo, err := c.makeRequest(ctx, endpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response DeveloperRankingResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetCollections 获取收藏夹列表
+func (c *Client) GetCollections(ctx context.Context, query *CollectionsQuery, limit int) (*CollectionsResponse, *RateLimitInfo, error) {
+	bts, rateLimitInfo, err := c.makeRequest(ctx, collectionsEndpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response CollectionsResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetHotCollections 获取热门收藏夹
+func (c *Client) GetHotCollections(ctx context.Context, query *CollectionsQuery, limit int) (*HotCollectionsResponse, *RateLimitInfo, error) {
+	bts, rateLimitInfo, err := c.makeRequest(ctx, hotCollectionsEndpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response HotCollectionsResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetCollectionRepos 获取收藏夹仓库列表
+func (c *Client) GetCollectionRepos(ctx context.Context, query *CollectionReposQuery, limit int) (*CollectionReposResponse, *RateLimitInfo, error) {
+	endpoint := fmt.Sprintf("%s%s/repos", collectionsEndpoint, query.CollectionID)
+	bts, rateLimitInfo, err := c.makeRequest(ctx, endpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response CollectionReposResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetRepoDetail 获取仓库详情
+func (c *Client) GetRepoDetail(ctx context.Context, query *RepoDetailQuery) (*RepoDetailResponse, *RateLimitInfo, error) {
+	endpoint := fmt.Sprintf("%s%s/%s", repoDetailEndpoint, query.Owner, query.Repo)
+	bts, rateLimitInfo, err := c.makeRequest(ctx, endpoint, nil)
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response RepoDetailResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetDeveloperDetail 获取开发者详情
+func (c *Client) GetDeveloperDetail(ctx context.Context, query *DeveloperDetailQuery) (*DeveloperDetailResponse, *RateLimitInfo, error) {
+	endpoint := fmt.Sprintf("%s%s", developerDetailEndpoint, query.Username)
+	bts, rateLimitInfo, err := c.makeRequest(ctx, endpoint, nil)
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response DeveloperDetailResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	return &response, rateLimitInfo, nil
+}
+
+// GetLanguageStats 获取语言统计
+func (c *Client) GetLanguageStats(ctx context.Context, query *LanguageStatsQuery, limit int) (*LanguageStatsResponse, *RateLimitInfo, error) {
+	bts, rateLimitInfo, err := c.makeRequest(ctx, languageStatsEndpoint, toQuery(query))
+	if err != nil {
+		return nil, rateLimitInfo, err
+	}
+
+	var response LanguageStatsResponse
+	if err := json.Unmarshal(bts, &response); err != nil {
+		return nil, rateLimitInfo, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	if limit > 0 && len(response.Data.Rows) > limit {
+		response.Data.Rows = response.Data.Rows[:limit]
+	}
+
+	return &response, rateLimitInfo, nil
+}

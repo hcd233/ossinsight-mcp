@@ -61,6 +61,73 @@ var clientCmd = &cobra.Command{
 		}
 
 		logger.Logger().Info("[Client CMD] call tool", zap.Any("result", result))
+
+		// 测试仓库排名工具
+		repoRankingResult, err := cli.CallTool(ctx, mcp.CallToolRequest{
+			Params: mcp.CallToolParams{
+				Name: "GetRepoRanking",
+				Arguments: map[string]any{
+					"ranking_type": "stars",
+					"time_range":   "past_month",
+					"language":     "Go",
+					"limit":        5,
+				},
+			},
+		})
+		if err != nil {
+			logger.Logger().Error("[Client CMD] call GetRepoRanking tool failed", zap.Error(err))
+		} else {
+			logger.Logger().Info("[Client CMD] call GetRepoRanking tool", zap.Any("result", repoRankingResult))
+		}
+
+		// 测试开发者排名工具
+		developerRankingResult, err := cli.CallTool(ctx, mcp.CallToolRequest{
+			Params: mcp.CallToolParams{
+				Name: "GetDeveloperRanking",
+				Arguments: map[string]any{
+					"ranking_type": "commits",
+					"time_range":   "past_month",
+					"limit":        5,
+				},
+			},
+		})
+		if err != nil {
+			logger.Logger().Error("[Client CMD] call GetDeveloperRanking tool failed", zap.Error(err))
+		} else {
+			logger.Logger().Info("[Client CMD] call GetDeveloperRanking tool", zap.Any("result", developerRankingResult))
+		}
+
+		// 测试热门收藏夹工具
+		hotCollectionsResult, err := cli.CallTool(ctx, mcp.CallToolRequest{
+			Params: mcp.CallToolParams{
+				Name: "GetHotCollections",
+				Arguments: map[string]any{
+					"time_range": "past_month",
+					"limit":      5,
+				},
+			},
+		})
+		if err != nil {
+			logger.Logger().Error("[Client CMD] call GetHotCollections tool failed", zap.Error(err))
+		} else {
+			logger.Logger().Info("[Client CMD] call GetHotCollections tool", zap.Any("result", hotCollectionsResult))
+		}
+
+		// 测试语言统计工具
+		languageStatsResult, err := cli.CallTool(ctx, mcp.CallToolRequest{
+			Params: mcp.CallToolParams{
+				Name: "GetLanguageStats",
+				Arguments: map[string]any{
+					"time_range": "past_month",
+					"limit":      10,
+				},
+			},
+		})
+		if err != nil {
+			logger.Logger().Error("[Client CMD] call GetLanguageStats tool failed", zap.Error(err))
+		} else {
+			logger.Logger().Info("[Client CMD] call GetLanguageStats tool", zap.Any("result", languageStatsResult))
+		}
 	},
 }
 

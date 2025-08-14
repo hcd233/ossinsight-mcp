@@ -44,6 +44,54 @@ type ListTrendingReposResponse struct {
 	Data TrendingReposData `json:"data"`
 }
 
+// RepoRankingResponse 仓库排名响应
+type RepoRankingResponse struct {
+	Response
+	Data RepoRankingData `json:"data"`
+}
+
+// DeveloperRankingResponse 开发者排名响应
+type DeveloperRankingResponse struct {
+	Response
+	Data DeveloperRankingData `json:"data"`
+}
+
+// CollectionsResponse 收藏夹列表响应
+type CollectionsResponse struct {
+	Response
+	Data CollectionsData `json:"data"`
+}
+
+// HotCollectionsResponse 热门收藏夹响应
+type HotCollectionsResponse struct {
+	Response
+	Data HotCollectionsData `json:"data"`
+}
+
+// CollectionReposResponse 收藏夹仓库列表响应
+type CollectionReposResponse struct {
+	Response
+	Data CollectionReposData `json:"data"`
+}
+
+// RepoDetailResponse 仓库详情响应
+type RepoDetailResponse struct {
+	Response
+	Data RepoDetailData `json:"data"`
+}
+
+// DeveloperDetailResponse 开发者详情响应
+type DeveloperDetailResponse struct {
+	Response
+	Data DeveloperDetailData `json:"data"`
+}
+
+// LanguageStatsResponse 语言统计响应
+type LanguageStatsResponse struct {
+	Response
+	Data LanguageStatsData `json:"data"`
+}
+
 // // ListCollectionsResponse 收藏夹列表响应
 // //
 // //	@author centonhuang
@@ -161,51 +209,185 @@ type TrendingRepoRow struct {
 	CollectionNames   string `json:"collection_names"`
 }
 
-// // CollectionRow 收藏夹数据
-// //
-// //	@author centonhuang
-// //	@update 2025-06-09 20:24:03
-// type CollectionRow struct {
-// 	ID   int64  `json:"id"`
-// 	Name string `json:"name"`
-// }
+// RepoRankingData 仓库排名数据
+type RepoRankingData struct {
+	Data
+	Rows []RepoRankingRow `json:"rows"`
+}
 
-// // HotCollectionRow 热门收藏夹数据
-// //
-// //	@author centonhuang
-// //	@update 2025-06-09 20:24:09
-// type HotCollectionRow struct {
-// 	ID                    int64  `json:"id"`
-// 	Name                  string `json:"name"`
-// 	Repos                 int64  `json:"repos"`
-// 	RepoID                string `json:"repo_id"`
-// 	RepoName              string `json:"repo_name"`
-// 	RepoCurrentPeriodRank *int   `json:"repo_current_period_rank"`
-// 	RepoPastPeriodRank    *int   `json:"repo_past_period_rank"`
-// 	RepoRankChanges       *int64 `json:"repo_rank_changes"`
-// }
+// RepoRankingRow 仓库排名数据行
+type RepoRankingRow struct {
+	Rank            string `json:"rank"`
+	RepoID          string `json:"repo_id"`
+	RepoName        string `json:"repo_name"`
+	PrimaryLanguage string `json:"primary_language"`
+	Description     string `json:"description"`
+	Stars           string `json:"stars"`
+	Forks           string `json:"forks"`
+	Commits         string `json:"commits"`
+	Contributors    string `json:"contributors"`
+	PullRequests    string `json:"pull_requests"`
+	Issues          string `json:"issues"`
+}
 
-// // CollectionRepoRow 收藏夹仓库列表数据
-// //
-// //	@author centonhuang
-// //	@update 2025-06-09 20:24:11
-// type CollectionRepoRow struct {
-// 	RepoID   string `json:"repo_id"`
-// 	RepoName string `json:"repo_name"`
-// }
+// DeveloperRankingData 开发者排名数据
+type DeveloperRankingData struct {
+	Data
+	Rows []DeveloperRankingRow `json:"rows"`
+}
 
-// // RepoRankingRow 仓库排名数据
-// //
-// //	@author centonhuang
-// //	@update 2025-06-09 20:24:13
-// type RepoRankingRow struct {
-// 	RepoID              string  `json:"repo_id"`
-// 	RepoName            string  `json:"repo_name"`
-// 	CurrentPeriodGrowth int64   `json:"current_period_growth"`
-// 	CurrentPeriodRank   int64   `json:"current_period_rank"`
-// 	PastPeriodGrowth    int64   `json:"past_period_growth"`
-// 	PastPeriodRank      int64   `json:"past_period_rank"`
-// 	GrowthPop           float64 `json:"growth_pop"`
-// 	RankPop             int64   `json:"rank_pop"`
-// 	Total               int64   `json:"total"`
-// }
+// DeveloperRankingRow 开发者排名数据行
+type DeveloperRankingRow struct {
+	Rank            string `json:"rank"`
+	UserID          string `json:"user_id"`
+	Login           string `json:"login"`
+	Name            string `json:"name"`
+	Company         string `json:"company"`
+	Location        string `json:"location"`
+	Stars           string `json:"stars"`
+	Forks           string `json:"forks"`
+	Commits         string `json:"commits"`
+	PullRequests    string `json:"pull_requests"`
+	Issues          string `json:"issues"`
+	Followers       string `json:"followers"`
+	Following       string `json:"following"`
+}
+
+// CollectionsData 收藏夹数据
+type CollectionsData struct {
+	Data
+	Rows []CollectionRow `json:"rows"`
+}
+
+// CollectionRow 收藏夹数据行
+type CollectionRow struct {
+	CollectionID   string `json:"collection_id"`
+	CollectionName string `json:"collection_name"`
+	Description    string `json:"description"`
+	CreatorLogin   string `json:"creator_login"`
+	CreatorName    string `json:"creator_name"`
+	RepoCount      string `json:"repo_count"`
+	FollowerCount  string `json:"follower_count"`
+	CreatedAt      string `json:"created_at"`
+	UpdatedAt      string `json:"updated_at"`
+}
+
+// HotCollectionsData 热门收藏夹数据
+type HotCollectionsData struct {
+	Data
+	Rows []HotCollectionRow `json:"rows"`
+}
+
+// HotCollectionRow 热门收藏夹数据行
+type HotCollectionRow struct {
+	CollectionID   string `json:"collection_id"`
+	CollectionName string `json:"collection_name"`
+	Description    string `json:"description"`
+	CreatorLogin   string `json:"creator_login"`
+	CreatorName    string `json:"creator_name"`
+	RepoCount      string `json:"repo_count"`
+	FollowerCount  string `json:"follower_count"`
+	HotScore       string `json:"hot_score"`
+	CreatedAt      string `json:"created_at"`
+	UpdatedAt      string `json:"updated_at"`
+}
+
+// CollectionReposData 收藏夹仓库数据
+type CollectionReposData struct {
+	Data
+	Rows []CollectionRepoRow `json:"rows"`
+}
+
+// CollectionRepoRow 收藏夹仓库数据行
+type CollectionRepoRow struct {
+	RepoID          string `json:"repo_id"`
+	RepoName        string `json:"repo_name"`
+	PrimaryLanguage string `json:"primary_language"`
+	Description     string `json:"description"`
+	Stars           string `json:"stars"`
+	Forks           string `json:"forks"`
+	Commits         string `json:"commits"`
+	Contributors    string `json:"contributors"`
+	PullRequests    string `json:"pull_requests"`
+	Issues          string `json:"issues"`
+	AddedAt         string `json:"added_at"`
+}
+
+// RepoDetailData 仓库详情数据
+type RepoDetailData struct {
+	Data
+	Rows []RepoDetailRow `json:"rows"`
+}
+
+// RepoDetailRow 仓库详情数据行
+type RepoDetailRow struct {
+	RepoID          string `json:"repo_id"`
+	RepoName        string `json:"repo_name"`
+	PrimaryLanguage string `json:"primary_language"`
+	Description     string `json:"description"`
+	Stars           string `json:"stars"`
+	Forks           string `json:"forks"`
+	Commits         string `json:"commits"`
+	Contributors    string `json:"contributors"`
+	PullRequests    string `json:"pull_requests"`
+	Issues          string `json:"issues"`
+	CreatedAt       string `json:"created_at"`
+	UpdatedAt       string `json:"updated_at"`
+	PushedAt        string `json:"pushed_at"`
+	Size            string `json:"size"`
+	License         string `json:"license"`
+	Topics          string `json:"topics"`
+	Homepage        string `json:"homepage"`
+	Language        string `json:"language"`
+}
+
+// DeveloperDetailData 开发者详情数据
+type DeveloperDetailData struct {
+	Data
+	Rows []DeveloperDetailRow `json:"rows"`
+}
+
+// DeveloperDetailRow 开发者详情数据行
+type DeveloperDetailRow struct {
+	UserID        string `json:"user_id"`
+	Login         string `json:"login"`
+	Name          string `json:"name"`
+	Company       string `json:"company"`
+	Location      string `json:"location"`
+	Email         string `json:"email"`
+	Bio           string `json:"bio"`
+	Blog          string `json:"blog"`
+	Twitter       string `json:"twitter_username"`
+	Stars         string `json:"stars"`
+	Forks         string `json:"forks"`
+	Commits       string `json:"commits"`
+	PullRequests  string `json:"pull_requests"`
+	Issues        string `json:"issues"`
+	Followers     string `json:"followers"`
+	Following     string `json:"following"`
+	CreatedAt     string `json:"created_at"`
+	UpdatedAt     string `json:"updated_at"`
+	PublicRepos   string `json:"public_repos"`
+	PublicGists   string `json:"public_gists"`
+	Hireable      string `json:"hireable"`
+}
+
+// LanguageStatsData 语言统计数据
+type LanguageStatsData struct {
+	Data
+	Rows []LanguageStatsRow `json:"rows"`
+}
+
+// LanguageStatsRow 语言统计数据行
+type LanguageStatsRow struct {
+	Language       string `json:"language"`
+	RepoCount      string `json:"repo_count"`
+	Stars          string `json:"stars"`
+	Forks          string `json:"forks"`
+	Commits        string `json:"commits"`
+	Contributors   string `json:"contributors"`
+	PullRequests   string `json:"pull_requests"`
+	Issues         string `json:"issues"`
+	GrowthRate     string `json:"growth_rate"`
+	PopularityRank string `json:"popularity_rank"`
+}
